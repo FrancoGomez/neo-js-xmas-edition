@@ -1,10 +1,8 @@
 const $form = document.querySelector("form");
-const $nombre = document.querySelector('[name="nombre"]');
-const $ciudad = document.querySelector('[name="ciudad"]');
-const $descripcionRegalo = document.querySelector(
-  '[name="descripcion-regalo"]'
-);
-const $enviarCarta = document.querySelector("#enviar-carta");
+const $nombre = $form.nombre;
+const $ciudad = $form.ciudad;
+const $descripcionRegalo = $form["descripcion-regalo"];
+const $enviarCarta = $form.submit;
 
 $enviarCarta.onclick = (event) => {
   validarFromulario();
@@ -20,8 +18,8 @@ const validarFromulario = () => {
 const validarNombre = (nombre) => {
   let contieneSoloLetras = new RegExp("^[A-z]+$");
 
-  if (nombre.length < 2) {
-    return "El nombre debe contener al menos 2 caracteres.";
+  if (nombre.length === 0) {
+    return "El nombre debe contener al menos 1 caracteres.";
   }
 
   if (nombre.length > 50) {
@@ -40,11 +38,11 @@ const validarCiudad = (ciudad) => {
 };
 
 const validarDescripcionRegalo = (descripcionRegalo) => {
-  if (descripcionRegalo.length < 2) {
-    return "La descripcion debe tener al menos 2 caracteres.";
+  if (descripcionRegalo.length === 0) {
+    return "La descripcion debe tener al menos 1 caracter.";
   }
 
-  if (descripcionRegalo.length > 250) {
-    return "La descripcion debe tener menos de 250 caracteres.";
+  if (descripcionRegalo.length > 100) {
+    return "La descripcion debe tener menos de 100 caracteres.";
   }
 };
