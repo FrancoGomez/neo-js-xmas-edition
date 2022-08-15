@@ -3,6 +3,8 @@ const $nombre = $form.nombre;
 const $ciudad = $form.ciudad;
 const $descripcionRegalo = $form["descripcion-regalo"];
 const $enviarCarta = $form.submit;
+const $errores = document.querySelector("#errores");
+const errores = {};
 
 $enviarCarta.onclick = (event) => {
   validarFromulario();
@@ -10,9 +12,13 @@ $enviarCarta.onclick = (event) => {
 };
 
 const validarFromulario = () => {
-  console.log(validarNombre($nombre.value));
-  console.log(validarCiudad($ciudad.value));
-  console.log(validarDescripcionRegalo($descripcionRegalo.value));
+  errores["nombre"] = validarNombre($nombre.value);
+  errores["ciudad"] = validarCiudad($ciudad.value);
+  errores["descripcion-regalo"] = validarDescripcionRegalo(
+    $descripcionRegalo.value
+  );
+
+  manejarErrores();
 };
 
 const validarNombre = (nombre) => {
@@ -29,12 +35,16 @@ const validarNombre = (nombre) => {
   if (!contieneSoloLetras.test(nombre)) {
     return "El nombre solo debe contener letras, estas pueden ser minusculas o mayusculas.";
   }
+
+  return "";
 };
 
 const validarCiudad = (ciudad) => {
   if (ciudad === "") {
     return "Debes elegir una ciudad.";
   }
+
+  return "";
 };
 
 const validarDescripcionRegalo = (descripcionRegalo) => {
@@ -45,4 +55,39 @@ const validarDescripcionRegalo = (descripcionRegalo) => {
   if (descripcionRegalo.length > 100) {
     return "La descripcion debe tener menos de 100 caracteres.";
   }
+
+  return "";
+};
+
+const manejarErrores = () => {
+  limpiarListadoErrores();
+  limpiarRecuadrosRojos();
+
+  for (const key in errores) {
+    if (errores[key] === "") continue;
+
+    $form[key].className = "error";
+    imprimirError(errores[key]);
+  }
+};
+
+const imprimirError = (error) => {
+  const $error = document.createElement("li");
+  $error.textContent = error;
+  $errores.appendChild($error);
+};
+
+const limpiarListadoErrores = () => {
+  const listadoErrores = document.querySelectorAll("#errores li");
+  listadoErrores.forEach((elemento) => {
+    elemento.remove();
+  });
+};
+
+const limpiarRecuadrosRojos = () => {
+  const listadoElementosConRecuadrosRojos = document.querySelectorAll(".error");
+
+  listadoElementosConRecuadrosRojos.forEach((elemento) => {
+    elemento.className = elemento.className.replace("error", "");
+  });
 };

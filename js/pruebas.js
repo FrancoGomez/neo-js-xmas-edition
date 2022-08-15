@@ -18,7 +18,7 @@ const probarValidarNombre = () => {
   );
 
   console.assert(
-    validarNombre("Fran") === undefined,
+    validarNombre("Fran") === "",
     "Validar nombre fallo con un nombre valido."
   );
 };
@@ -30,7 +30,7 @@ const probarValidarCiudad = () => {
   );
 
   console.assert(
-    validarCiudad("Catamarca") === undefined,
+    validarCiudad("Catamarca") === "",
     "Validar ciudad fallo con una ciudad valida."
   );
 };
@@ -50,7 +50,7 @@ const probarValidarDescripcionRegalo = () => {
   );
 
   console.assert(
-    validarDescripcionRegalo("Max Steel") === undefined,
+    validarDescripcionRegalo("Max Steel") === "",
     "Validar descripcion regalo fallo con una descripcion valida."
   );
 };
