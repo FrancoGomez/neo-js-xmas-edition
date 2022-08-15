@@ -5,6 +5,7 @@ const $descripcionRegalo = $form["descripcion-regalo"];
 const $enviarCarta = $form.submit;
 const $errores = document.querySelector("#errores");
 const errores = {};
+let contadorErrores = 0;
 
 $enviarCarta.onclick = (event) => {
   validarFromulario();
@@ -19,6 +20,10 @@ const validarFromulario = () => {
   );
 
   manejarErrores();
+
+  if (contadorErrores === 0) {
+    manejarEnvioFormulario();
+  }
 };
 
 const validarNombre = (nombre) => {
@@ -62,12 +67,15 @@ const validarDescripcionRegalo = (descripcionRegalo) => {
 const manejarErrores = () => {
   limpiarListadoErrores();
   limpiarRecuadrosRojos();
+  contadorErrores = 0;
 
   for (const key in errores) {
     if (errores[key] === "") continue;
 
     $form[key].className = "error";
     imprimirError(errores[key]);
+
+    contadorErrores++;
   }
 };
 
@@ -90,4 +98,13 @@ const limpiarRecuadrosRojos = () => {
   listadoElementosConRecuadrosRojos.forEach((elemento) => {
     elemento.className = elemento.className.replace("error", "");
   });
+};
+
+const manejarEnvioFormulario = () => {
+  $form.className += "oculto";
+  document.querySelector("#exito").className = "";
+
+  setTimeout(() => {
+    window.location.href = "http://127.0.0.1:5500/wishlist.html";
+  }, 5000);
 };
